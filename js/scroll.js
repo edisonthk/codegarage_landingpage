@@ -9,7 +9,7 @@ function ScrollEvent(cb) {
 	var movement = self.MOVEMENT_STATIC;
 	var last_moment = movement;
 
-	var movementChangeEvent = function(direction) {
+	var movementChangeEvent = function(e, direction) {
 		if(direction == self.MOVEMENT_STATIC) {
 			console.log("static");
 		}else if(direction == self.MOVEMENT_UP) {
@@ -38,7 +38,7 @@ function ScrollEvent(cb) {
 			if(movement != last_moment) {
 				last_moment = movement;
 				if(movement == self.MOVEMENT_UP || movement == self.MOVEMENT_DOWN) {
-					movementChangeEvent(movement);	
+					movementChangeEvent(self, movement);	
 				}
 			}
 		},false);
