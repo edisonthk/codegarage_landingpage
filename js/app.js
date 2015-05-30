@@ -238,6 +238,7 @@ var App = {
 	activeClass: 'active',
 	currentSection: 0,
 	last_section_index: -1,
+	animePlaying: false,
 	span: 33,
 	duration: 1300,
 	fadeInWhiteSide: function() {
@@ -407,11 +408,22 @@ var App = {
 						flag_exception_moving = false;
 					}
 					self.fadeInWhiteSide();
+				}else if(index == 2) {
+					// 1 -> 2
+
+				}else if(index == 3) {
+					// 2 -> 3
 				}
 			}else{
 				// backward
 				if(index == 0) {
 					// 1 -> 0
+				}else if(index == 1) {
+					// 2 -> 1
+
+				}else if(index == 2) {
+					// 3 -> 2
+
 				}
 			}
 		};
@@ -420,23 +432,29 @@ var App = {
 		self.setFocusSection(self.currentSection);
 
 		self.engine = new ScrollEvent(function(e, direction) {
-			if(direction == e.MOVEMENT_UP) {
-				if(self.currentSection > 0) {
-					self.currentSection -= 1;
-					beforeMove(self.currentSection, self._sections[self.currentSection]);
-					self.setFocusSection(self.currentSection);
-					CanvasHandler.animationEndCallback = function() {
-						afterMove(self.currentSection, self._sections[self.currentSection]);
-					};
-				}
-			}else if(direction == e.MOVEMENT_DOWN) {
-				if(self.currentSection < self._sections.length - 1) {
-					self.currentSection += 1;
-					beforeMove(self.currentSection, self._sections[self.currentSection]);
-					self.setFocusSection(self.currentSection);
-					CanvasHandler.animationEndCallback = function() {
-						afterMove(self.currentSection, self._sections[self.currentSection]);
-					};
+			if(!self.animePlaying) {
+				if(direction == e.MOVEMENT_UP) {
+					if(self.currentSection > 0) {
+						self.currentSection -= 1;
+						beforeMove(self.currentSection, self._sections[self.currentSection]);
+						self.setFocusSection(self.currentSection);
+						self.animePlaying = true;
+						CanvasHandler.animationEndCallback = function() {
+							afterMove(self.currentSection, self._sections[self.currentSection]);
+							self.animePlaying = false;
+						};
+					}
+				}else if(direction == e.MOVEMENT_DOWN) {
+					if(self.currentSection < self._sections.length - 1) {
+						self.currentSection += 1;
+						beforeMove(self.currentSection, self._sections[self.currentSection]);
+						self.setFocusSection(self.currentSection);
+						self.animePlaying = true;
+						CanvasHandler.animationEndCallback = function() {
+							afterMove(self.currentSection, self._sections[self.currentSection]);
+							self.animePlaying = false;
+						};
+					}
 				}
 			}
 		});
