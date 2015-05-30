@@ -4,7 +4,7 @@ function ScrollEvent(cb) {
 	self.MOVEMENT_UP = 1;
 	self.MOVEMENT_DOWN = -1;
 
-	var triggleDelta = 5;
+	self.triggleDelta = 5;
 
 	var movement = self.MOVEMENT_STATIC;
 	var last_moment = movement;
@@ -27,9 +27,9 @@ function ScrollEvent(cb) {
 	window.onload = function() {
 		
 		window.addEventListener("mousewheel", function(e) {
-			if(e.deltaY > triggleDelta) {
+			if(e.deltaY > self.triggleDelta) {
 				movement = self.MOVEMENT_DOWN;
-			}else if(e.deltaX < -triggleDelta){
+			}else if(e.deltaX < -self.triggleDelta){
 				movement = self.MOVEMENT_UP;
 			}else {
 				movement = self.MOVEMENT_STATIC;
@@ -45,3 +45,7 @@ function ScrollEvent(cb) {
 
 	}
 }
+
+ScrollEvent.prototype.setTriggleDelta = function(delta) {
+	this.triggleDelta = delta;
+};

@@ -38,9 +38,13 @@ section .page_container {
   z-index: 3;
 }
 section .page_container.title {
+	top: 0px;
   position: relative;
   padding-top: 120px;
-  bottom: 0;
+  -webkit-transition: top 1s ease-in-out;
+  -moz-transition: top 1s ease-in-out;
+  -o-transition: top 1s ease-in-out;
+  transition: top 1s ease-in-out;
 }
 section .page_container.title h5 {
 	font-weight: normal;
@@ -75,13 +79,24 @@ section .page_container.title .btn-what {
 	position: absolute;
 	background-color: white;
 }
-section .page_container.whiteside {
-	bottom: 0px;
+section .page_container.whiteside.transition {
 	transition: opacity 1s;
 	-webkit-transition: opacity 1s;
 }
+section .page_container.whiteside {
+	bottom: 0px;
+	opacity: 0;
+	z-index: -1;
+}
+section.active .page_container.whiteside {
+	z-index: 0;
+	opacity: 1;
+}
+section.active .page_container.whiteside.hide {
+	opacity: 0;
+}
 .whiteside .vertical-center {
-	margin-top: 30%;
+	margin-top: 15%;
 }
 .whiteside .vertical-center * {
 	text-align: left;
@@ -212,10 +227,6 @@ section p {
 @-webkit-keyframes cloud_right_moving {
 	50%  {right: calc(50% - 300px);top: 80px;}
     100% {right: calc(50% - 300px);top: -400px;}
-}
-
-.hide {
-	opacity: 0;
 }
 
 /* large desktop */
